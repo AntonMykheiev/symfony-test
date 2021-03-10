@@ -30,19 +30,31 @@ class TimeZoneInfoService
         ];
     }
 
+    /**
+     * @param TimezoneInfo $timezoneInfo
+     * @return int
+     */
     private function calculateTimeOffset(TimezoneInfo $timezoneInfo): int
     {
-        $timezone = Carbon::now($timezoneInfo->getTimezone());
-        $utc = Carbon::now('UTC');
+        $timezone = Carbon::createMidnightDate(2021, 1, 1, $timezoneInfo->getTimezone());
+        $utc = Carbon::createMidnightDate(2021, 1, 1, 'UTC');
 
-        return (int)$timezone->diffInMinutes($utc);
+        return (int)$timezone->diffInMinutes($utc, false);
     }
 
+    /**
+     * @param TimezoneInfo $timezoneInfo
+     * @return int
+     */
     private function getFebruaryNumberOfDays(TimezoneInfo $timezoneInfo): int
     {
         return $this->getMonthNumberOfDays($timezoneInfo, self::FEBRUARY);
     }
 
+    /**
+     * @param TimezoneInfo $timezoneInfo
+     * @return string
+     */
     private function getMonthName(TimezoneInfo $timezoneInfo): string
     {
         $date = Carbon::create($timezoneInfo->getDate());
@@ -50,6 +62,11 @@ class TimeZoneInfoService
         return $date->monthName;
     }
 
+    /**
+     * @param TimezoneInfo $timezoneInfo
+     * @param null $month
+     * @return int
+     */
     private function getMonthNumberOfDays(TimezoneInfo $timezoneInfo, $month = null): int
     {
         $date = Carbon::create($timezoneInfo->getDate());
