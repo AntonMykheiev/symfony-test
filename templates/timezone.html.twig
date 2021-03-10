@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test timezone</title>
+</head>
+<body>
+{{ form(form) }}
+{% if timezone_info is defined %}
+    The timezone {{ timezone_info.timezone }} has {{ timezone_info.time_offset }} minutes offset to UTC.<br />
+    February in this year has {{ timezone_info.february_days }} days.<br />
+    Specified month {{ timezone_info.month_name }} has {{ timezone_info.month_days }} days.
+{% endif %}
+</body>
+</html>
